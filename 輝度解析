@@ -1,0 +1,45 @@
+import cv2 
+import matplotlib.pyplot as plt
+#グラフ別ウィンドウ表示
+%matplotlib 
+
+#ビデオオブジェクトの宣言
+cam = cv2.VideoCapture(0) 
+#各変数の初期化
+i = 0 
+j = 0
+x = []
+y = []
+plt.ion()
+
+
+while True:
+    #動画の画像読み込み
+    _, img = cam.read()
+    #グレースケールへの変換
+    img2 = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+
+    cv2.imshow('PUSH ENTER KEY', img) 
+    
+ 
+    i= i+1
+    j = img2.mean()
+    x.append(i)
+    y.append(j)
+    
+    plt.plot(x,y,color='blue')
+    plt.title('SimpleGraph') 
+    plt.xlabel('times')
+    plt.ylabel('brightness')
+    plt.ylim(0,255)
+    plt.grid()
+    plt.draw()
+    plt.pause(0.033)
+
+    #Enterで終了
+    if cv2.waitKey(1) == 13: break
+        
+plt.close()
+cam.release()
+
+cv2.destroyAllWindows()
